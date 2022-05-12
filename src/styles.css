@@ -53,3 +53,7 @@
   object-fit: scale;
   flex-shrink: 2;
 }
+
+.dog-heading:first-letter {
+  text-transform: uppercase;
+}
