@@ -9,8 +9,6 @@ import axios from "axios";
 
 // 👉 TASK 2- Select the "entry point", the element
 // inside of which we'll inject our dog cards 
-const entryPoint = document.querySelector(".entry");
-
 
 // 👉 TASK 3- `dogCardMaker` takes an object and returns a Dog Card.
 // Use this function to build a Card, and append it to the entry point.
@@ -51,7 +49,9 @@ function dogCardMaker({ imageURL, breed }) {
 //    * Traditional way: put another script tag inside index.html (`https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js`)
 //    * Projects with npm: install it with npm and import it into this file
 
-function getDogs({ breed, number }) {
+function getDogs({ breed, number, entry }) {
+  const entryPoint = document.querySelector(entry);
+
   const errorElem = document.createElement("h2");
   entryPoint.innerHTML = "";
   axios.get(`https://dog.ceo/api/breed/${breed.toLowerCase()}/images/random/${number}`)
@@ -68,9 +68,16 @@ function getDogs({ breed, number }) {
     .finally(() => console.log("DONE"))
 }
 
+import breeds from "./breeds";
+
 document.querySelector("button").addEventListener("click", () => {
-  const userInput = document.querySelector("input");
-  getDogs({ breed: userInput.value, number: 3 });
+  // User Input stretch goal
+  // const userInput = document.querySelector("input");
+  // getDogs({ breed: userInput.value, number: 3 });
+  // Separate data source
+  breeds.forEach(dog => {
+    getDogs({ breed: dog, number: 3, entry: ".entry" });
+  })
 })
 
 // 👉 TASK 5- Fetch dogs from `https://dog.ceo/api/breed/{breed}/images/random/{number}`

@@ -3,5 +3,7 @@ const breeds = [
   'affenpinscher',
   'australian',
   'mexicanhairless',
-  'cocker',
+  'spaniel',
 ]
+
+export default breeds;
