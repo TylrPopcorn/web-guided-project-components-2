@@ -50,24 +50,27 @@ function dogCardMaker({ imageURL, breed }) {
 // 👉 TASK 4- Bring the Axios library into the project using one of two methods:
 //    * Traditional way: put another script tag inside index.html (`https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js`)
 //    * Projects with npm: install it with npm and import it into this file
+
 function getDogs({ breed, number }) {
+  const errorElem = document.createElement("h2");
+  entryPoint.innerHTML = "";
   axios.get(`https://dog.ceo/api/breed/${breed.toLowerCase()}/images/random/${number}`)
     .then((res) => {
       res.data.message.forEach(dog => {
-      const dogCard = dogCardMaker({ imageURL: dog, breed: breed.toLowerCase() });
-      entryPoint.appendChild(dogCard);
+        const dogCard = dogCardMaker({ imageURL: dog, breed: breed.toLowerCase() });
+        entryPoint.appendChild(dogCard);
       })
     })
     .catch((err) => {
-      console.error(err);
+      errorElem.textContent = "PICK A REAL DOG BREED YA JOKER!";
+      entryPoint.appendChild(errorElem);
     })
     .finally(() => console.log("DONE"))
 }
 
 document.querySelector("button").addEventListener("click", () => {
   const userInput = document.querySelector("input");
-  console.log(userInput);
-  getDogs({ breed: "CoLlIe", number: 3 });
+  getDogs({ breed: userInput.value, number: 3 });
 })
 
 // 👉 TASK 5- Fetch dogs from `https://dog.ceo/api/breed/{breed}/images/random/{number}`
