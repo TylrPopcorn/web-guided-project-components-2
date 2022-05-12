@@ -10,7 +10,6 @@ import axios from "axios";
 // 👉 TASK 2- Select the "entry point", the element
 // inside of which we'll inject our dog cards 
 const entryPoint = document.querySelector(".entry");
-console.log(entryPoint);
 
 
 // 👉 TASK 3- `dogCardMaker` takes an object and returns a Dog Card.
@@ -23,22 +22,39 @@ function dogCardMaker({ imageURL, breed }) {
       <h3>
     </div>
   */
+ const cardContainer = document.createElement("div");
+ const dogImg = document.createElement("img");
+ const heading = document.createElement("h3");
   // set class names, attributes and text
+  cardContainer.classList.add("dog-card");
+  dogImg.classList.add("dog-image");
+  dogImg.src = imageURL;
+  dogImg.alt = "Cute doggo";
+  heading.textContent = breed;
 
   // create the hierarchy
+  cardContainer.appendChild(dogImg);
+  cardContainer.appendChild(heading);
 
   // add some interactivity
+  cardContainer.addEventListener("click", () => {
+    cardContainer.classList.toggle("selected");
+  })
 
   // never forget to return!
+  return cardContainer;
 }
 
 
 // 👉 TASK 4- Bring the Axios library into the project using one of two methods:
 //    * Traditional way: put another script tag inside index.html (`https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js`)
 //    * Projects with npm: install it with npm and import it into this file
-axios.get("https://dog.ceo/api/breeds/image/random")
+axios.get("https://dog.ceo/api/breed/bulldo/images/random/5")
   .then((res) => {
-    console.log(res.data.message);
+    res.data.message.forEach(dog => {
+    const dogCard = dogCardMaker({ imageURL: dog, breed: "Casey" });
+    entryPoint.appendChild(dogCard);
+    })
   })
   .catch((err) => {
     console.error(err);
